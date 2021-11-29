@@ -6,7 +6,7 @@
 #    By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 00:45:29 by wrosendo          #+#    #+#              #
-#    Updated: 2021/11/25 01:18:46 by wrosendo         ###   ########.fr        #
+#    Updated: 2021/11/27 22:23:16 by wrosendo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ EOC = "\033[0;0m"
 
 NAME = pipex
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -g
 OBJDIR = ./obj
 SRC_DIR = ./src
 INCLUDES = ./includes
@@ -33,7 +33,7 @@ OBJECTS_BONUS = $(addprefix $(OBJDIR)/, $(OBJFILE_BONUS))
 
 SRC_SHARED += ft_bzero.c ft_calloc.c ft_execute.c ft_memset.c ft_split.c
 SRC_SHARED += ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_error.c
-SRC_SHARED += ft_strnstr.c
+SRC_SHARED += ft_strnstr.c ft_memmove.c ft_strdup.c ft_memcpy.c ft_putstr_fd.c
 OBJFILE_SHARED = $(SRC_SHARED:.c=.o)
 OBJECTS_SHARED = $(addprefix $(OBJDIR)/, $(OBJFILE_SHARED))
 

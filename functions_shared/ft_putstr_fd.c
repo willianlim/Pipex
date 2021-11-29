@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/27 11:02:17 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/27 22:21:39 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/27 22:22:17 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "../includes/ft_pipex_shared.h"
 
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "ft_pipex_shared.h"
+void	ft_putstr_fd(char *s, int fd)
+{
+	int		i;
 
-int	ft_pipeline_mandatory(t_pipex *chest);
-
-#endif
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i] != '\0')
+	{
+		write (fd, &s[i], 1);
+		i++;
+	}
+}

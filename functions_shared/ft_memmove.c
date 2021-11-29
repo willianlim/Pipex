@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/27 11:02:17 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/25 09:06:24 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/25 09:06:25 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "../includes/ft_pipex_shared.h"
 
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "ft_pipex_shared.h"
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	char	*s;
+	char	*d;
 
-int	ft_pipeline_mandatory(t_pipex *chest);
-
-#endif
+	s = (char *)src;
+	d = (char *)dest;
+	if (s < d)
+	{
+		while (n--)
+			d[n] = s[n];
+		return (dest);
+	}
+	ft_memcpy(d, s, n);
+	return (dest);
+}

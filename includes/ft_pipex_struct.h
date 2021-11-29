@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_pipex_struct.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/27 11:02:17 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/27 22:11:12 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/27 22:11:21 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#ifndef FT_PIPEX_STRUCT_H
+# define FT_PIPEX_STRUCT_H
 
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "ft_pipex_shared.h"
+# define SPACE ' '
+# define COLON ':'
+# define PATH "PATH"
+# define FRONT_SLASH "/"
 
-int	ft_pipeline_mandatory(t_pipex *chest);
+typedef struct s_pipex
+{
+	int		argc;
+	char	**argv;
+	char	**envp;
+	char	***cmd;
+	char	**paths;
+	char	*path;
+	char	*path_slash;
+	char	**path_exec;
+	int		i;
+}t_pipex;
 
 #endif

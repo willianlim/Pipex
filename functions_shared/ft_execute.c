@@ -6,40 +6,68 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:56:12 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/25 01:00:07 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/11/28 21:31:53 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_pipex_shared.h"
+#include <stdio.h>
 
-char	*ft_find_path(char *cmd, char *envp[])
+void	*ft_find_path(t_pipex *chest, int k)
 {
-	char	**paths;
-	char	*path;
-	char	*path_slash;
-	int		i;
+	int	i;
 
 	i = -1;
-	while (!ft_strnstr(envp[++i], "PATH", 4))
+	while (!ft_strnstr(chest->envp[++i], PATH, 4))
 		;
-	paths = ft_split(envp[i] + 5, ':');
+	chest->paths = ft_split(chest->envp[i], COLON);
 	i = -1;
-	while (paths[++i])
+	while (chest->paths[++i])
 	{
-		path_slash = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path_slash, cmd);
-		free(path_slash);
-		if (!access(path, F_OK))
-			return (path);
+		chest->path_slash = ft_strjoin(chest->paths[i], FRONT_SLASH);
+		free(chest->paths[i]);
+		chest->path = ft_strjoin(chest->path_slash, chest->cmd[k][0]);
+		free(chest->path_slash);
+		if (!access(chest->path, F_OK | X_OK))
+		{
+			while (chest->paths[++i])
+				free(chest->paths[i]);
+			free(chest->paths);
+			return (chest->path);
+		}
+		free(chest->path);
 	}
+	free(chest->paths);
 	return (0);
 }
 
-void	ft_execute(char *argv, char *envp[])
+void	ft_init_struct(t_pipex *chest, int argc, char *argv[], char *envp[])
 {
-	char	**cmd;
+	chest->argc = argc;
+	chest->argv = argv;
+	chest->envp = envp;
+}
 
-	cmd = ft_split(argv, ' ');
-	if (execve(ft_find_path(cmd[0], envp), cmd, envp) == -1)
-		ft_error();
+int	ft_parse_cmd(t_pipex *chest, int argc, char *argv[], char *envp[])
+{
+	int		j;
+	int		i;
+
+	i = 1;
+	j = -1;
+	ft_init_struct(chest, argc, argv, envp);
+	chest->path_exec = (char **)calloc(sizeof(char *), (argc - 2));
+	chest->cmd = (char ***)calloc(sizeof(char **), (chest->argc + 1));
+	i = -1;
+	while (chest->argv[++j] != NULL)
+		chest->cmd[j] = ft_split(chest->argv[j], SPACE);
+	j = -1;
+	i = 0;
+	while (++i <= (chest->argc - 3))
+	{
+		chest->path_exec[++j] = ft_find_path(chest, (i + 1));
+		if (chest->path_exec[j] == NULL)
+			ft_error2(chest);
+	}
+	return (0);
 }

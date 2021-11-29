@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/27 11:02:17 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/25 09:05:21 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/25 09:05:22 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "../includes/ft_pipex_shared.h"
 
-# include <string.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include "ft_pipex_shared.h"
+char	*ft_strdup(const char *s)
+{
+	char	*str;
 
-int	ft_pipeline_mandatory(t_pipex *chest);
-
-#endif
+	str = malloc(ft_strlen(s) + 1);
+	if (str == 0)
+		return (NULL);
+	return (ft_memmove(str, s, ft_strlen(s) + 1));
+}
