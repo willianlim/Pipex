@@ -6,26 +6,24 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 00:56:35 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/29 08:47:54 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/11/30 07:34:27 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_pipex_bonus.h"
 
-static int	ft_child_process(t_pipex *chest, int *fd)
+int	ft_child_process(t_pipex *chest, int *fd, int i)
 {
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	if (execve(chest->path_exec[0], chest->cmd[2], chest->envp) == -1)
-		ft_message_clean(chest, 0, 2);
-	if (execve(chest->path_exec[chest->i], \
-	chest->cmd[(chest->i + 2)], chest->envp) == -1)
-		ft_message_clean(chest, 0, (chest->i + 2));
+	if (execve(chest->path_exec[i], \
+	chest->cmd[i + 2], chest->envp) == -1)
+		ft_message_clean(chest, 0, (i + 2));
 	exit(EXIT_FAILURE);
 }
 
-static void	ft_parent_process(int *fd, int pid)
+void	ft_parent_process(int *fd, int pid)
 {
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
@@ -33,28 +31,32 @@ static void	ft_parent_process(int *fd, int pid)
 	waitpid(pid, NULL, 0);
 }
 
-static int	ft_pipeline_bonus(t_pipex *chest)
+int	ft_pipeline_bonus(t_pipex *chest)
 {
+	int		i;
 	int		fd[2];
 	pid_t	pid;
 
-	chest->i = -1;
-	while (++chest->i < (chest->argc - 3))
+	i = -1;
+	while (++i < (chest->argc - 4))
 	{
 		if (pipe(fd) == -1)
 			ft_message_clean(chest, 2, 0);
 		pid = fork();
 		if (pid == -1)
 			ft_message_clean(chest, 2, 0);
-		else if (!pid)
-			ft_child_process(chest, fd);
+		if (!pid)
+			ft_child_process(chest, fd, i);
 		else
 			ft_parent_process(fd, pid);
 	}
+	if (execve(chest->path_exec[chest->argc - 4], \
+	chest->cmd[chest->argc - 2], chest->envp) == -1)
+		ft_message_clean(chest, 0, (chest->argc - 2));
 	exit(EXIT_SUCCESS);
 }
 
-static int	ft_master(t_pipex *chest)
+int	ft_master(t_pipex *chest)
 {
 	int	outfile;
 	int	infile;
@@ -66,12 +68,9 @@ static int	ft_master(t_pipex *chest)
 		ft_message_clean(chest, 2, 0);
 	dup2(infile, STDIN_FILENO);
 	close (infile);
-	ft_pipeline_bonus(chest);
 	dup2(outfile, STDOUT_FILENO);
 	close (outfile);
-	if (execve(chest->path_exec[chest->argc - 4], \
-	chest->cmd[chest->argc - 2], chest->envp) == -1)
-		ft_message_clean(chest, 0, (chest->argc - 2));
+	ft_pipeline_bonus(chest);
 	exit(EXIT_SUCCESS);
 }
 

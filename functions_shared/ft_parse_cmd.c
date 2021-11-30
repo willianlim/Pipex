@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute.c                                       :+:      :+:    :+:   */
+/*   ft_parse_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:56:12 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/29 07:39:47 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/11/30 07:52:35 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ int	ft_parse_cmd(t_pipex *chest, int argc, char *argv[], char *envp[])
 	int		j;
 	int		i;
 
-	i = 1;
-	j = -1;
 	ft_init_struct(chest, argc, argv, envp);
 	chest->path_exec = (char **)ft_calloc(sizeof(char *), (argc - 2));
 	chest->cmd = (char ***)ft_calloc(sizeof(char **), (chest->argc + 1));
-	i = -1;
+	j = -1;
 	while (chest->argv[++j] != NULL)
 		chest->cmd[j] = ft_split(chest->argv[j], SPACE);
 	j = -1;

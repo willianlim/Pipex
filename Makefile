@@ -6,7 +6,7 @@
 #    By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 00:45:29 by wrosendo          #+#    #+#              #
-#    Updated: 2021/11/29 09:42:22 by wrosendo         ###   ########.fr        #
+#    Updated: 2021/11/30 07:59:46 by wrosendo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ RED = "\n\033[0;31m"
 EOC = "\033[0;0m"
 
 NAME = pipex
+NAME_BONUS = hello
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 OBJDIR = ./obj
@@ -52,9 +53,12 @@ $(OBJDIR)/%.o: $(SRC_DIR_PIP)/%.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -I $(INCLUDES) -o $@
 
-bonus: $(OBJECTS_SHARED) $(OBJECTS_BONUS)
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJECTS_SHARED) $(OBJECTS_BONUS)
 	@echo $(GREEN) "Source files are compiled!\n" $(EOC)
-	$(CC) $(CFLAGS) -I $(INCLUDES) -o $(NAME) $(OBJDIR)/*.o
+	$(CC) $(CFLAGS) -I $(INCLUDES) -o $(NAME_BONUS) $(OBJDIR)/*.o
+	@cp $(NAME_BONUS) $(NAME)
 	@echo $(GREEN) "pipex is created!\n" $(EOC)
 
 $(OBJDIR)/%.o: $(SRC_DIR_PIP)/%.c
@@ -70,6 +74,7 @@ clean:
 
 fclean: clean
 	$(REMOVE) $(NAME)
+	$(REMOVE) $(NAME_BONUS)
 	@echo $(RED) "Deleting EVERYTHING! ⌐(ಠ۾ಠ)¬\n" $(EOC)
 
 re: fclean all
@@ -79,4 +84,4 @@ rebonus: fclean bonus
 norm:
 	@norminette ./includes/ ./functions_shared ./src/
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re rebonus
