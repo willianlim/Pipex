@@ -6,7 +6,7 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:05:16 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/12/01 11:32:35 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 17:20:56 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ int	ft_message_clean(t_pipex *chest, int t_bool, int k)
 	while (chest->path_exec[++i])
 		free(chest->path_exec[i]);
 	free(chest->path_exec);
-	exit(errno);
+	exit(127);
 }
