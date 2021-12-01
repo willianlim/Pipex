@@ -6,11 +6,22 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 13:32:48 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/12/01 10:56:05 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 12:30:41 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_pipex_bonus.h"
+
+void	ft_message(t_pipex *chest)
+{
+	if (chest->argc < 6)
+	{
+		ft_putstr_fd(RED"Error: Bad argument\n"EOC, 1);
+		ft_putstr_fd("Ex: ./pipex here_doc <LIMITER> <cmd> <cmd1> \
+		<...> file\n", 1);
+	}
+	exit(EXIT_FAILURE);
+}
 
 void	ft_here_doc(t_pipex *chest)
 {
@@ -19,6 +30,7 @@ void	ft_here_doc(t_pipex *chest)
 	char	*s;
 
 	chest->j = 1;
+	ft_message(chest);
 	unlink("here_doc.txt");
 	outfile = open(chest->argv[chest->argc - 1], \
 	O_WRONLY | O_CREAT | O_TRUNC, 0777);
