@@ -6,7 +6,7 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 13:32:48 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/12/01 12:43:50 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 15:50:10 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	ft_message(t_pipex *chest)
 		<...> file\n", 1);
 		exit(EXIT_FAILURE);
 	}
+	chest->j = 1;
 	return (0);
 }
 
@@ -30,7 +31,6 @@ void	ft_here_doc(t_pipex *chest)
 	int		outfile;
 	char	*s;
 
-	chest->j = 1;
 	ft_message(chest);
 	unlink("here_doc.txt");
 	outfile = open(chest->argv[chest->argc - 1], \
@@ -38,6 +38,7 @@ void	ft_here_doc(t_pipex *chest)
 	infile = open("here_doc.txt", O_WRONLY | O_CREAT, 0777);
 	while (1)
 	{
+		ft_putstr_fd("heredoc> ", 1);
 		s = get_next_line(0);
 		if (!ft_strncmp(s, chest->argv[2], ft_strlen(chest->argv[2])))
 		{
