@@ -6,12 +6,11 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:56:12 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/30 07:52:35 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 09:38:09 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_pipex_shared.h"
-#include <stdio.h>
 
 static void	*ft_find_path(t_pipex *chest, int k)
 {
@@ -41,26 +40,19 @@ static void	*ft_find_path(t_pipex *chest, int k)
 	return (0);
 }
 
-static void	ft_init_struct(t_pipex *chest, int argc, char *argv[], char *envp[])
+int	ft_parse_cmd(t_pipex *chest)
 {
-	chest->argc = argc;
-	chest->argv = argv;
-	chest->envp = envp;
-}
+	int	j;
+	int	i;
 
-int	ft_parse_cmd(t_pipex *chest, int argc, char *argv[], char *envp[])
-{
-	int		j;
-	int		i;
-
-	ft_init_struct(chest, argc, argv, envp);
-	chest->path_exec = (char **)ft_calloc(sizeof(char *), (argc - 2));
+	chest->path_exec = (char **)ft_calloc(sizeof(char *), (chest->argc - 2));
 	chest->cmd = (char ***)ft_calloc(sizeof(char **), (chest->argc + 1));
 	j = -1;
 	while (chest->argv[++j] != NULL)
 		chest->cmd[j] = ft_split(chest->argv[j], SPACE);
 	j = -1;
 	i = 0;
+	i = chest->j;
 	while (++i <= (chest->argc - 3))
 	{
 		chest->path_exec[++j] = ft_find_path(chest, (i + 1));

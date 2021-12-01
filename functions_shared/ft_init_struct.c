@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_init_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/30 18:29:38 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/30 13:51:31 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/30 13:51:48 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "../includes/ft_pipex_shared.h"
 
-# include "ft_pipex_shared.h"
-
-/**
- * @brief This function creates the pipe, runs the fork and calls the parent
- * and child processes.
- *
- * @param chest Data struct.
- * @return int Exit status/code 0 on success or 2 on error.
- */
-static int	ft_pipeline_mandatory(t_pipex *chest);
-
-#endif
+void	ft_init_struct(t_pipex *chest, int argc, char *argv[], char *envp[])
+{
+	chest->argc = argc;
+	chest->argv = argv;
+	chest->envp = envp;
+}

@@ -6,7 +6,7 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 00:56:40 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/30 06:56:00 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:31:19 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	ft_pipeline_mandatory(t_pipex *chest)
 		waitpid(pid1, NULL, 0);
 		ft_parent_process(chest, fd);
 	}
-	exit (EXIT_SUCCESS);
+	exit (EXIT_FAILURE);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -73,12 +73,16 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex	chest;
 
 	ft_memset(&chest, 0, sizeof(chest));
+	ft_init_struct(&chest, argc, argv, envp);
 	if (argc == 5)
 	{
-		ft_parse_cmd(&chest, argc, argv, envp);
+		ft_parse_cmd(&chest);
 		ft_pipeline_mandatory(&chest);
 	}
 	else
-		write (STDOUT_FILENO, "command not found", 18);
+	{
+		ft_putstr_fd(RED"Error: Bad argument\n"EOC, 2);
+		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 2);
+	}
 	return (0);
 }

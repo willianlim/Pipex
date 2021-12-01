@@ -6,7 +6,7 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 00:56:35 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/30 07:34:27 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:28:56 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	ft_child_process(t_pipex *chest, int *fd, int i)
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	if (execve(chest->path_exec[i], \
+	if (execve(chest->path_exec[i - chest->j], \
 	chest->cmd[i + 2], chest->envp) == -1)
-		ft_message_clean(chest, 0, (i + 2));
+		ft_message_clean(chest, 0, (i + 2 + chest->j));
 	exit(EXIT_FAILURE);
 }
 
@@ -38,6 +38,7 @@ int	ft_pipeline_bonus(t_pipex *chest)
 	pid_t	pid;
 
 	i = -1;
+	i += chest->j;
 	while (++i < (chest->argc - 4))
 	{
 		if (pipe(fd) == -1)
@@ -50,10 +51,10 @@ int	ft_pipeline_bonus(t_pipex *chest)
 		else
 			ft_parent_process(fd, pid);
 	}
-	if (execve(chest->path_exec[chest->argc - 4], \
+	if (execve(chest->path_exec[chest->argc - 4 - chest->j], \
 	chest->cmd[chest->argc - 2], chest->envp) == -1)
 		ft_message_clean(chest, 0, (chest->argc - 2));
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 int	ft_master(t_pipex *chest)
@@ -71,7 +72,7 @@ int	ft_master(t_pipex *chest)
 	dup2(outfile, STDOUT_FILENO);
 	close (outfile);
 	ft_pipeline_bonus(chest);
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -79,12 +80,27 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex	chest;
 
 	ft_memset(&chest, 0, sizeof(chest));
+	ft_init_struct(&chest, argc, argv, envp);
 	if (argc >= 5)
 	{
-		ft_parse_cmd(&chest, argc, argv, envp);
-		ft_master(&chest);
+		if (!ft_strncmp(argv[1], "here_doc", 9))
+		{
+			ft_here_doc(&chest);
+			ft_parse_cmd(&chest);
+			ft_pipeline_bonus(&chest);
+		}
+		else
+		{
+			ft_parse_cmd(&chest);
+			ft_master(&chest);
+		}
 	}
 	else
-		write (STDOUT_FILENO, "command not found", 18);
+	{
+		ft_putstr_fd(RED"Error: Bad argument\n"EOC, 1);
+		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <...> file2\n", 1);
+		ft_putstr_fd("    ./pipex here_doc <LIMITER> <cmd> <cmd1> \
+		<...> file\n", 1);
+	}
 	return (0);
 }

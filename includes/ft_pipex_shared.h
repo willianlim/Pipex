@@ -6,19 +6,13 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 00:56:18 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/29 08:55:23 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 11:42:44 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PIPEX_SHARED_H
 # define FT_PIPEX_SHARED_H
 
-# include <stddef.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <stdio.h>
-# include <string.h>
 # include "ft_pipex_struct.h"
 
 /**
@@ -168,6 +162,44 @@ size_t	ft_strlen(const char *s);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 /**
+ * @brief Returns a pointer to the first occurence of the 'c'
+ * in the string s.
+ *
+ * @param s Pointer to the string memory area.
+ * @param c Character to be searched inside the string s.
+ * @return char* Resturn a pointer to the matched character or
+ * NULL if the character is not found.
+ */
+char	*ft_strchr(const char *s, int c);
+
+/**
+ * @brief Function only compare the first (at most) n bytes of
+ * strings s1 and s2.
+ *
+ * @param s1 Pointer to the area of memory of the first string.
+ * @param s2 Pointer to the area of memory of the second string
+ * @param n Buffer size in bytes to compare both strings.
+ * @return int Return value < 0: then it indicates s1 is less than s2.
+ * Return value > 0: then it indicates s2 is less than s1.
+ * Return value == 0: then it indicates s1 is equal to s2.
+ */
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+char	*get_next_line(int fd);
+
+/**
+ * @brief Allocates (with malloc(3)) an returns a substring from
+ * the string 's'. The substring begins at index 'start' and
+ * is of maximum size 'len'.
+ *
+ * @param s The string from which to create the substring.
+ * @param start The start index of the substring in the string 's'.
+ * @param len The maximum lenght of the substring.
+ * @return char* Returns the substring. NULL if the allocation fails.
+ */
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+/**
  * @brief Function that prints the error message and deallocates memory.
  *
  * @param chest Data struct
@@ -189,6 +221,16 @@ int		ft_message_clean(t_pipex *chest, int t_bool, int k);
  * contains the path of the binary files of the commands that will be executed.
  * @return int Return 0 on success or exit status/code on error 2.
  */
-int		ft_parse_cmd(t_pipex *chest, int argc, char *argv[], char *envp[]);
+int		ft_parse_cmd(t_pipex *chest);
+
+/**
+ * @brief Initialize struct values with parameters of function main.
+ *
+ * @param chest Data struct.
+ * @param argc Argument count.
+ * @param argv Argument value.
+ * @param envp Enverioment pointer.
+ */
+void	ft_init_struct(t_pipex *chest, int argc, char *argv[], char *envp[]);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 00:45:29 by wrosendo          #+#    #+#              #
-#    Updated: 2021/11/30 07:59:46 by wrosendo         ###   ########.fr        #
+#    Updated: 2021/12/01 11:06:27 by wrosendo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ OBJFILE_BONUS = $(SRC_FILE_BONUS:.c=.o)
 OBJECTS_BONUS = $(addprefix $(OBJDIR)/, $(OBJFILE_BONUS))
 
 SRC_SHARED += ft_bzero.c ft_calloc.c ft_parse_cmd.c ft_memset.c ft_split.c
-SRC_SHARED += ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_message_clean.c
-SRC_SHARED += ft_strnstr.c ft_memmove.c ft_strdup.c ft_memcpy.c ft_putstr_fd.c
+SRC_SHARED += ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_here_doc.c ft_message_clean.c ft_init_struct.c ft_strncmp.c ft_strchr.c get_next_line.c
+SRC_SHARED += ft_strnstr.c ft_memmove.c ft_strdup.c ft_memcpy.c ft_putstr_fd.c ft_init_struct.c ft_substr.c
 OBJFILE_SHARED = $(SRC_SHARED:.c=.o)
 OBJECTS_SHARED = $(addprefix $(OBJDIR)/, $(OBJFILE_SHARED))
 
@@ -75,6 +75,7 @@ clean:
 fclean: clean
 	$(REMOVE) $(NAME)
 	$(REMOVE) $(NAME_BONUS)
+	$(REMOVE) ./*.txt
 	@echo $(RED) "Deleting EVERYTHING! ⌐(ಠ۾ಠ)¬\n" $(EOC)
 
 re: fclean all

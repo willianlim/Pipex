@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/30 18:29:38 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/30 13:29:55 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/30 17:39:28 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "../includes/ft_pipex_shared.h"
 
-# include "ft_pipex_shared.h"
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
 
-/**
- * @brief This function creates the pipe, runs the fork and calls the parent
- * and child processes.
- *
- * @param chest Data struct.
- * @return int Exit status/code 0 on success or 2 on error.
- */
-static int	ft_pipeline_mandatory(t_pipex *chest);
-
-#endif
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s + i);
+	return (NULL);
+}

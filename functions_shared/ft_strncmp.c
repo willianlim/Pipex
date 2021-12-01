@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.h                                         :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 00:56:27 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/11/30 18:29:38 by wrosendo         ###   ########.fr       */
+/*   Created: 2021/11/30 13:28:43 by wrosendo          #+#    #+#             */
+/*   Updated: 2021/11/30 13:29:05 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#include "../includes/ft_pipex_shared.h"
 
-# include "ft_pipex_shared.h"
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-/**
- * @brief This function creates the pipe, runs the fork and calls the parent
- * and child processes.
- *
- * @param chest Data struct.
- * @return int Exit status/code 0 on success or 2 on error.
- */
-static int	ft_pipeline_mandatory(t_pipex *chest);
-
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (i < n)
+		{
+			if (s1[i] == s2[i])
+				i++;
+			else
+				return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		}
+		else
+			return (0);
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
