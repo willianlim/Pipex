@@ -6,7 +6,7 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 23:05:16 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/12/01 17:20:56 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 18:04:39 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,15 @@ int	ft_message_clean(t_pipex *chest, int t_bool, int k)
 {
 	int	i;
 	int	j;
+	int	w;
 
 	i = -1;
+	w = 1;
 	ft_message(chest, t_bool, k);
+	if (chest->argc - 2 == k)
+		w = 127;
+	else if (k >= 2 && k <= chest->argc - 3)
+		w = 0;
 	while (chest->cmd[++i])
 	{
 		j = -1;
@@ -51,5 +57,5 @@ int	ft_message_clean(t_pipex *chest, int t_bool, int k)
 	while (chest->path_exec[++i])
 		free(chest->path_exec[i]);
 	free(chest->path_exec);
-	exit(127);
+	exit(w);
 }
