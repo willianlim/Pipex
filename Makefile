@@ -6,7 +6,7 @@
 #    By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/25 00:45:29 by wrosendo          #+#    #+#              #
-#    Updated: 2021/12/01 11:06:27 by wrosendo         ###   ########.fr        #
+#    Updated: 2021/12/01 15:53:45 by wrosendo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ RED = "\n\033[0;31m"
 EOC = "\033[0;0m"
 
 NAME = pipex
-NAME_BONUS = hello
+NAME_BONUS = pipex_bonus
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 OBJDIR = ./obj
