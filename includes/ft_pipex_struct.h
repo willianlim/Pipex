@@ -6,13 +6,14 @@
 /*   By: wrosendo <wrosendo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 22:11:12 by wrosendo          #+#    #+#             */
-/*   Updated: 2021/12/01 11:45:39 by wrosendo         ###   ########.fr       */
+/*   Updated: 2021/12/01 12:15:18 by wrosendo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PIPEX_STRUCT_H
 # define FT_PIPEX_STRUCT_H
 
+# include <stddef.h>
 # include <string.h>
 # include <stdio.h>
 # include <sys/wait.h>
